@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
 
 let persons = [
   { 
@@ -30,11 +31,54 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-  date=new Date()
+  const date=new Date()
   response.send(`<p>phonebook has info for ${persons.length} people</p>
   <p>${date}</p>`)
 })
 
+app.get('/api/persons/:id', (request,response)=>{
+    let id=Number(request.params.id)
+    const person=persons.find((person)=>person.id===id)
+    if(person){
+      response.json(person)
+    }
+    else{
+      response.status(204).end()
+    }
+})
+
+const generateId=()=>{
+ return Math.floor( Math.random()* 250)
+}
+
+app.post('/api/persons',(request,response)=>{
+  const body=request.body
+  console.log(request)
+  if(!(body.name&&body.number)){
+    return response.status(400).json({error:'name or number is missing'})
+  }
+
+  let value=persons.some((person)=>person.name.toLowerCase()===body.name.trim().toLowerCase())
+  if(value){
+    return response.status(401).json({err:'this name already exists'})
+  }
+
+  const person={
+    name:body.name,
+    number:body.number,
+    id:generateId()
+ }
+  persons=persons.concat(person)
+
+  response.json(persons)
+
+})
+
+app.delete('/api/persons/:id', (request,response)=>{
+  let id=Number(request.params.id)
+  persons=persons.filter((person)=>person.id!==id)
+  response.status(204).end()
+})
 
 
 const PORT = 3001
