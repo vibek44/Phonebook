@@ -82,8 +82,15 @@ app.post('/api/persons',(request,response)=>{
     id:generateId()
  }
   persons=persons.concat(person)
-  response.json(persons)
+  response.json(person)
 
+})
+
+app.put('/api/persons/:id',(request,response)=>{
+  const body=request.body
+  let person=persons.find((el)=>el.id===Number(body.id))
+  person={...person,number:body.number}
+  response.json(person)
 })
 
 app.delete('/api/persons/:id', (request,response)=>{
