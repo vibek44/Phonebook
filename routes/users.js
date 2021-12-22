@@ -40,7 +40,7 @@ router.get('/', (req,res,next)=>{
   next();
 })
   
-router.get('/:id', (req,res)=>{
+router.get('/:id', (req,res,next)=>{
    const id=Number(req.params.id);
    const person=persons.find((person)=>person.id===id);
    if(!person){
@@ -48,6 +48,7 @@ router.get('/:id', (req,res)=>{
      return;
     }
     res.json(person);
+    next();
   })
   
   const generateId=()=>Math.floor(Math.random()*100+persons.length)
@@ -58,13 +59,13 @@ router.get('/:id', (req,res)=>{
       res.status(400).json({error:'Name or number is missing'})
       return;
     }
-    let person=persons.find((person)=>{
+   /* let person=persons.find((person)=>{
       return person.name.toLowerCase()===body.name.trim().toLowerCase()})
       if(person){
         res.status(400).json({error:'Name must be unique'})
         return;
-      }
-    console.log(person);
+      }*/
+    
     const id=generateId();
     person={id:id,...body}
     persons=persons.concat(person)
