@@ -14,7 +14,7 @@ morgan.token('token',(req,res)=>{
 })
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :token'))
-
+app.use(express.static('build'))
 app.use(['/api/persons','/info'], personRouter)
 
 const PORT=process.env.PORT || 3001
