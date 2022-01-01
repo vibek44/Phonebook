@@ -18,8 +18,8 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :t
 app.use(express.static('build'))
 app.use(['/api/persons','/info'], personRouter)
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
+const unknownEndpoint = (req, res) => {
+  res.status(404).send({ error: 'unknown endpoint' })
 }
 
 app.use(unknownEndpoint)
