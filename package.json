@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../phonebookfrontend/ && npm run build && cp -r build ../Phonebook",
     "deploy": "git push heroku main",
@@ -27,9 +28,11 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.12.1",
+    "mongoose-unique-validator": "^3.0.0",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.6.0",
     "nodemon": "^2.0.7"
   }
 }
