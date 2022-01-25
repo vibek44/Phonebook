@@ -1,12 +1,12 @@
 const config=require('./utils/config')
 const express=require('express')
-const app=express()
 const cors=require('cors')
 const morgan=require('morgan')
 const personRouter=require('./controllers/person')
 const middleware=require('./utils/middleware')
 const mongoose=require('mongoose')
 const logger=require('./utils/logger')
+const app=express()
 
 
 
@@ -22,6 +22,7 @@ mongoose.connect(config.MONGODB_URI,{ useNewUrlParser: true ,useUnifiedTopology:
 app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
+//app.use(middleware.requestLogger)
 
 morgan.token('token',(req) => {
     return JSON.stringify(req.body)
